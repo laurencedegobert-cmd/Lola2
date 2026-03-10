@@ -13,6 +13,7 @@
     <nav>
       <a href="Index.html">Accueil</a>
       <a href="map.html">Carte</a>
+      <a href="Index.html#contact">Contact</a>
     </nav>
   </header>
 
@@ -36,10 +37,59 @@
       maxZoom: 19,
     }).addTo(map);
 
+    // Marker for Grand Place
     L.marker(brusselsCenter)
       .addTo(map)
       .bindPopup('Grand Place, Bruxelles')
       .openPopup();
+
+    // Layer for drinking fountains from open data API
+    const fountainsLayer = L.layerGroup().addTo(map);
+
+    const apiUrl =
+      "https://bruxellesdata.opendatasoft.com/api/explore/v2.1/catalog/datasets/fontaines-d-eau-potable-gerees-par-la-ville-de-bruxelles/records?where=within_distance(geo_point_2d,%20geom'POINT(4.352457057672918%2050.84693434392934)',%201km)&limit=20";
+
+    fetch(apiUrl)
+      .then((response) => response.json())
+      .then((data) => {
+        const records = data.results || [];
+        records.forEach((record) => {
+          const point = record.geo_point_2d;
+          if (!point || typeof point.lat !== 'number' || typeof point.lon !== 'number') return;
+
+          const marker = L.marker([point.lat, point.lon]);
+          const name = record.name_fr || record.name_nl || 'Fontaine';
+          const address = record.address_fr || record.address_nl || '';
+          const info = `<strong>${name}</strong><br>${address}`;
+
+          marker.bindPopup(info);
+          fountainsLayer.addLayer(marker);
+        });
+      })
+      .catch((err) => {
+        console.warn('Impossible de charger les fontaines :', err);
+      });
+
+    // User position in red
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const userLatLng = [position.coords.latitude, position.coords.longitude];
+          L.circleMarker(userLatLng, {
+            color: '#c00',
+            radius: 10,
+            fillColor: '#c00',
+            fillOpacity: 0.9,
+          })
+            .addTo(map)
+            .bindPopup('Vous êtes ici')
+            .openPopup();
+        },
+        (err) => {
+          console.warn('Impossible d’obtenir la position :', err);
+        }
+      );
+    }
   </script>
 </body>
 </html>
