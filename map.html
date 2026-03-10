@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carte de Bruxelles</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+</head>
+<body>
+  <header>
+    <h1>Carte de Bruxelles</h1>
+    <nav>
+      <a href="Index.html">Accueil</a>
+      <a href="map.html">Carte</a>
+    </nav>
+  </header>
+
+  <main>
+    <p class="label">Voici une carte de Bruxelles avec la Grand Place indiquée.</p>
+    <div id="map" class="map"></div>
+  </main>
+
+  <footer>
+    <p class="copyright">&copy; 2026 Découvrir Bruxelles</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const brusselsCenter = [50.84693434392934, 4.352457057672918];
+
+    const map = L.map('map').setView(brusselsCenter, 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors',
+      maxZoom: 19,
+    }).addTo(map);
+
+    L.marker(brusselsCenter)
+      .addTo(map)
+      .bindPopup('Grand Place, Bruxelles')
+      .openPopup();
+  </script>
+</body>
+</html>
