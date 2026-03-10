@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Découvrir Bruxelles</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Découvrir Bruxelles</h1>
+    <nav>
+      <a href="#">Accueil</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <img src="./Images/bruxelles.avif" alt="Vue aérienne de Bruxelles avec l'Hôtel de Ville"
+    />
+
+    <p class="label">Quelques endroits intéressants :</p>
+
+    <ul id="liste-lieux">
+      <li>Grand Place</li>
+      <li>Atomium</li>
+      <li>Parc du Cinquantenaire</li>
+    </ul>
+
+    <form class="add-form" id="form-lieu">
+      <input type="text" id="input-lieu" placeholder="Ajouter un lieu" />
+      <button type="submit">Ajouter</button>
+    </form>
+
+    <section class="contact">
+      <h2>Contactez-nous</h2>
+      <form class="contact-form" id="contact-form">
+        <label>
+          Nom
+          <input type="text" id="contact-name" name="name" placeholder="Votre nom" required />
+        </label>
+        <label>
+          Email
+          <input type="email" id="contact-email" name="email" placeholder="Votre email" required />
+        </label>
+        <label>
+          Message
+          <textarea id="contact-message" name="message" placeholder="Votre message" required></textarea>
+        </label>
+        <button type="submit">Envoyer</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p class="copyright">&copy; 2026 Découvrir Bruxelles</p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
